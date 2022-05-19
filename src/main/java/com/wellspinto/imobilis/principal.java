@@ -28,6 +28,23 @@ public class principal extends javax.swing.JFrame {
     public principal() {
         initComponents();
         
+        JToggleButton laserPrinter = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg"));
+        laserPrinter.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg"));
+        laserPrinter.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOn.svg"));
+        laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
+        laserPrinter.addActionListener((e) -> {
+            if (laserPrinter.isSelected()) {
+                laserPrinter.setToolTipText("Impressora Laser esta Ativa.");
+            } else {
+                laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
+            }
+        });
+        
+        JToolBar printerToolbar = new JToolBar();
+        printerToolbar.add(laserPrinter);
+        //printerToolbar.add(thermalPrinter);
+        printerToolbar.addSeparator();
+        
         FlatButton emailButton = new FlatButton();
         emailButton.setIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/users.svg"));
         emailButton.setButtonType(FlatButton.ButtonType.toolBarButton);
@@ -73,6 +90,7 @@ public class principal extends javax.swing.JFrame {
         searchBar.putClientProperty("JTextField.showClearButton", Boolean.valueOf(true));
     
         menuBar.add(Box.createGlue());
+        menuBar.add((Component)printerToolbar);
         menuBar.add((Component)searchBar);
         menuBar.add((Component)emailButton);
     }
