@@ -1,5 +1,8 @@
 package com.wellspinto.imobilis;
 
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.GroupLayout;
@@ -10,7 +13,11 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.formdev.flatlaf.icons.FlatSearchWithHistoryIcon;
 import com.wellspinto.funcoes.Globais;
+import com.wellspinto.funcoes.PrinterLister;
 import java.awt.Component;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import javax.print.PrintService;
 import javax.swing.Box;
 import javax.swing.Icon;
 
@@ -28,8 +35,28 @@ public class principal extends javax.swing.JFrame {
     public principal() {
         initComponents();
         
+        JToggleButton themeSet = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/github.svg"));
+        //themeSet.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterHover.svg"));
+        //themeSet.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOn.svg"));
+        themeSet.setToolTipText("Tema Claro ou Escuro.");
+        themeSet.addActionListener((e) -> {
+            EventQueue.invokeLater(() -> {
+                try {
+                    String themeFlat = null;
+                    if (themeSet.isSelected()) {
+                        themeFlat = FlatLightLaf.class.getName();
+                    } else {
+                        themeFlat = FlatDarkLaf.class.getName();
+                    }
+                    UIManager.setLookAndFeel(themeFlat);
+                    FlatLaf.updateUI();
+                } catch (Exception ex) {}
+            });
+
+        });
+        
         JToggleButton laserPrinter = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg"));
-        laserPrinter.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg"));
+        laserPrinter.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterHover.svg"));
         laserPrinter.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOn.svg"));
         laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
         laserPrinter.addActionListener((e) -> {
@@ -40,9 +67,38 @@ public class principal extends javax.swing.JFrame {
             }
         });
         
+        JToggleButton thermalPrinter = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/thermalPrinterOff.svg"));
+        thermalPrinter.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/thermalPrinterHover.svg"));
+        thermalPrinter.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/thermalPrinterOn.svg"));
+        thermalPrinter.setToolTipText("Impressora Laser esta Desativada.");
+        thermalPrinter.addActionListener((e) -> {
+            if (thermalPrinter.isSelected()) {
+                thermalPrinter.setToolTipText("Impressora Thermica esta Ativa.");
+            } else {
+                thermalPrinter.setToolTipText("Impressora Thermica esta Desativada.");
+            }
+        });
+        thermalPrinter.addMouseListener(new MouseAdapter() { 
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getModifiers() == MouseEvent.BUTTON3_MASK && e.getClickCount() == 1) {
+                JPopupMenu popupMenu = new JPopupMenu();
+                
+                PrinterLister pLister = new PrinterLister();
+                for(PrintService ps : pLister.getPrinters()){
+                    popupMenu.add(ps.getName());
+		}
+                //popupMenu.add("(empty)");
+                popupMenu.show(thermalPrinter, 0, thermalPrinter.getHeight());
+                }
+            }
+        });
+                
         JToolBar printerToolbar = new JToolBar();
+        printerToolbar.add(themeSet);
+        printerToolbar.addSeparator();
         printerToolbar.add(laserPrinter);
-        //printerToolbar.add(thermalPrinter);
+        printerToolbar.add(thermalPrinter);
         printerToolbar.addSeparator();
         
         FlatButton emailButton = new FlatButton();
