@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormWindow( "javax.swing.JFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq t {space :::p, par l {comp jToolBar2:::::x, seq {space :0:0:x, comp desktopPane:::p:491:p}}, space :p:321:p}}"
-			"$verticalGroup": "par l {seq t {space :::p, comp jToolBar2:::p:69:p, space :::p, comp desktopPane::::127:x, space :::p}}"
+			"$horizontalGroup": "par l {seq l {space :p::p, par l {seq {comp desktopPane:::::x, space :p:141:p}, seq {comp jToolBar2:::::x, space :p:318:p}}}}"
+			"$verticalGroup": "par l {seq t {space :p::p, comp jToolBar2:::p:69:p, space :p::p, comp desktopPane::::285:x, space :p:98:p}}"
 		} ) {
 			name: "this"
 			"defaultCloseOperation": 3
@@ -13,6 +13,32 @@ new FormModel {
 			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/wellspinto/figuras/logo.png" )
 			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class com.jformdesigner.runtime.NullLayout ) ) {
 				name: "desktopPane"
+				add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+					"$layoutConstraints": "hidemode 3"
+					"$columnConstraints": "[fill][fill]"
+					"$rowConstraints": "[][][]"
+				} ) {
+					name: "internalFrame1"
+					"visible": true
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 165
+					"y": 75
+					"width": 295
+					"height": 175
+				} )
+				add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class net.miginfocom.swing.MigLayout ) {
+					"$layoutConstraints": "hidemode 3"
+					"$columnConstraints": "[fill][fill]"
+					"$rowConstraints": "[][][]"
+				} ) {
+					name: "internalFrame2"
+					"visible": true
+				}, new FormLayoutConstraints( class com.jformdesigner.runtime.NullConstraints ) {
+					"x": 20
+					"y": 55
+					"width": 205
+					"height": 215
+				} )
 			} )
 			add( new FormContainer( "javax.swing.JToolBar", new FormLayoutManager( class javax.swing.JToolBar ) ) {
 				name: "jToolBar2"
@@ -98,7 +124,7 @@ new FormModel {
 				} )
 			}
 		}, new FormLayoutConstraints( null ) {
-			"size": new java.awt.Dimension( 510, 300 )
+			"size": new java.awt.Dimension( 640, 550 )
 			"location": new java.awt.Point( 0, 0 )
 		} )
 	}

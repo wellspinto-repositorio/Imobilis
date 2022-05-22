@@ -15,11 +15,14 @@ import com.formdev.flatlaf.icons.FlatSearchWithHistoryIcon;
 import com.wellspinto.funcoes.Globais;
 import com.wellspinto.funcoes.PrinterLister;
 import java.awt.Component;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.print.PrintService;
 import javax.swing.Box;
 import javax.swing.Icon;
+import net.miginfocom.swing.*;
 
 /**
  *
@@ -34,19 +37,21 @@ public class principal extends javax.swing.JFrame {
      */
     public principal() {
         initComponents();
-        
-        JToggleButton themeSet = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/github.svg"));
-        //themeSet.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterHover.svg"));
-        //themeSet.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOn.svg"));
+       
+        FlatSVGIcon themeIcon = new FlatSVGIcon("com/wellspinto/icons/theme.svg",16,16);
+        themeIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.WHITE ) );
+        JToggleButton themeSet = new JToggleButton((Icon)themeIcon);
         themeSet.setToolTipText("Tema Claro ou Escuro.");
         themeSet.addActionListener((e) -> {
             EventQueue.invokeLater(() -> {
                 try {
                     String themeFlat = null;
                     if (themeSet.isSelected()) {
+                        themeIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.BLACK ) );
                         themeFlat = FlatLightLaf.class.getName();
                     } else {
                         themeFlat = FlatDarkLaf.class.getName();
+                        themeIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.WHITE ) );
                     }
                     UIManager.setLookAndFeel(themeFlat);
                     FlatLaf.updateUI();
@@ -55,9 +60,8 @@ public class principal extends javax.swing.JFrame {
 
         });
         
-        JToggleButton laserPrinter = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg"));
-        laserPrinter.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterHover.svg"));
-        laserPrinter.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/laserPrinterOn.svg"));
+        FlatSVGIcon laserIconPrinter = new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg");
+        JToggleButton laserPrinter = new JToggleButton((Icon)laserIconPrinter);
         laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
         laserPrinter.addActionListener((e) -> {
             if (laserPrinter.isSelected()) {
@@ -67,9 +71,8 @@ public class principal extends javax.swing.JFrame {
             }
         });
         
-        JToggleButton thermalPrinter = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/thermalPrinterOff.svg"));
-        thermalPrinter.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/thermalPrinterHover.svg"));
-        thermalPrinter.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/thermalPrinterOn.svg"));
+        FlatSVGIcon thermalIconPrinter = new FlatSVGIcon("com/wellspinto/icons/thermalPrinterDisabled.svg",16,16);
+        JToggleButton thermalPrinter = new JToggleButton((Icon)thermalIconPrinter);
         thermalPrinter.setToolTipText("Impressora Laser esta Desativada.");
         thermalPrinter.addActionListener((e) -> {
             if (thermalPrinter.isSelected()) {
@@ -88,7 +91,6 @@ public class principal extends javax.swing.JFrame {
                 for(PrintService ps : pLister.getPrinters()){
                     popupMenu.add(ps.getName());
 		}
-                //popupMenu.add("(empty)");
                 popupMenu.show(thermalPrinter, 0, thermalPrinter.getHeight());
                 }
             }
@@ -120,7 +122,24 @@ public class principal extends javax.swing.JFrame {
         searchHistoryButton.setToolTipText("Search History");
         searchHistoryButton.addActionListener(e -> {
           JPopupMenu popupMenu = new JPopupMenu();
-          popupMenu.add("(empty)");
+          
+          JCheckBoxMenuItem propCheckBoxMenuItem = new JCheckBoxMenuItem();
+          propCheckBoxMenuItem.setText("Proprietários");
+          propCheckBoxMenuItem.setMnemonic('P');
+          propCheckBoxMenuItem.setSelected(true);
+          
+          JCheckBoxMenuItem imovCheckBoxMenuItem = new JCheckBoxMenuItem();
+          imovCheckBoxMenuItem.setText("Imóveis");
+          imovCheckBoxMenuItem.setMnemonic('I');
+          imovCheckBoxMenuItem.setSelected(false);
+          
+          popupMenu.add(propCheckBoxMenuItem);
+          popupMenu.add(imovCheckBoxMenuItem);
+          popupMenu.add("Locatários");
+          popupMenu.add("Fiadores");
+          popupMenu.addSeparator();
+          popupMenu.add("Recibos");
+          popupMenu.add("Extratos");
           popupMenu.show(searchHistoryButton, 0, searchHistoryButton.getHeight());
         });
         searchBar.putClientProperty("JTextField.leadingComponent", searchHistoryButton);
@@ -141,6 +160,64 @@ public class principal extends javax.swing.JFrame {
         searchToolbar.add(matchCaseButton);
         searchToolbar.add(wordsButton);
 
+        searchBar.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                JScrollPane tbl = new JScrollPane();
+                tbl.setSize(300, 300);
+                tbl.setPreferredSize(new Dimension(300,300));
+                tbl.setMaximumSize(new Dimension(300,300));
+                tbl.setMinimumSize(new Dimension(300,300));
+
+                int posEnd = searchBar.getX();
+                int posStart = posEnd - 300;
+                //tbl.setLocation(300, 0);
+                tbl.setLocation(posEnd , 0);
+
+                tbl.setVisible(true);
+                
+                add(tbl,0);
+                repaint();
+                //pack();
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+                
+            }
+        });
+//            int posEnd = searchBar.getX() + searchBarWidth;
+//            int posStart = posEnd - 300;
+//            JWindow wnd = new JWindow();
+//            wnd.setSize(300, 350);
+//            wnd.setLocation(posEnd , searchBar.getY() + searchBar.getHeight());
+//            {
+//                wnd.setLayout(new MigLayout(
+//                    "hidemode 3",
+//                    // columns
+//                    "[fill]" +
+//                    "[153,fill]" +
+//                    "[fill]",
+//                    // rows
+//                    "[]" +
+//                    "[]" +
+//                    "[]" +
+//                    "[]"));
+//
+//                //======== scrollPane1 ========
+//                {
+//                    //scrollPane1.setViewportView(table1);
+//                }
+//                //wnd.add(scrollPane1, "cell 0 0 3 4");
+//                wnd.pack();
+//                wnd.setLocationRelativeTo(wnd.getOwner());
+//            }
+        
+        
         searchBar.putClientProperty("JTextField.trailingComponent", searchToolbar);
         searchBar.putClientProperty("JTextField.showClearButton", Boolean.valueOf(true));
         searchBar.putClientProperty("JTextField.showClearButton", Boolean.valueOf(true));
@@ -174,6 +251,8 @@ public class principal extends javax.swing.JFrame {
         contentMenuItem = new JMenuItem();
         aboutMenuItem = new JMenuItem();
         desktopPane = new JDesktopPane();
+        internalFrame1 = new JInternalFrame();
+        internalFrame2 = new JInternalFrame();
         jToolBar2 = new JToolBar();
         jLabel1 = new JLabel();
 
@@ -265,6 +344,40 @@ public class principal extends javax.swing.JFrame {
         {
             desktopPane.setLayout(null);
 
+            //======== internalFrame1 ========
+            {
+                internalFrame1.setVisible(true);
+                Container internalFrame1ContentPane = internalFrame1.getContentPane();
+                internalFrame1ContentPane.setLayout(new MigLayout(
+                    "hidemode 3",
+                    // columns
+                    "[fill]" +
+                    "[fill]",
+                    // rows
+                    "[]" +
+                    "[]" +
+                    "[]"));
+            }
+            desktopPane.add(internalFrame1);
+            internalFrame1.setBounds(165, 75, 295, 175);
+
+            //======== internalFrame2 ========
+            {
+                internalFrame2.setVisible(true);
+                Container internalFrame2ContentPane = internalFrame2.getContentPane();
+                internalFrame2ContentPane.setLayout(new MigLayout(
+                    "hidemode 3",
+                    // columns
+                    "[fill]" +
+                    "[fill]",
+                    // rows
+                    "[]" +
+                    "[]" +
+                    "[]"));
+            }
+            desktopPane.add(internalFrame2);
+            internalFrame2.setBounds(20, 55, 205, 215);
+
             {
                 // compute preferred size
                 Dimension preferredSize = new Dimension();
@@ -299,14 +412,15 @@ public class principal extends javax.swing.JFrame {
         contentPane.setLayout(contentPaneLayout);
         contentPaneLayout.setHorizontalGroup(
             contentPaneLayout.createParallelGroup()
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addComponent(jToolBar2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGap(0, 0, Short.MAX_VALUE)
-                            .addComponent(desktopPane, GroupLayout.PREFERRED_SIZE, 491, GroupLayout.PREFERRED_SIZE)))
-                    .addGap(321, 321, 321))
+                            .addComponent(desktopPane)
+                            .addGap(141, 141, 141))
+                        .addGroup(contentPaneLayout.createSequentialGroup()
+                            .addComponent(jToolBar2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(318, 318, 318))))
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
@@ -314,8 +428,8 @@ public class principal extends javax.swing.JFrame {
                     .addContainerGap()
                     .addComponent(jToolBar2, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 127, Short.MAX_VALUE)
-                    .addContainerGap())
+                    .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
+                    .addGap(98, 98, 98))
         );
         pack();
         setLocationRelativeTo(getOwner());
@@ -382,6 +496,8 @@ public class principal extends javax.swing.JFrame {
     private JMenuItem contentMenuItem;
     private JMenuItem aboutMenuItem;
     private JDesktopPane desktopPane;
+    private JInternalFrame internalFrame1;
+    private JInternalFrame internalFrame2;
     private JToolBar jToolBar2;
     private JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
