@@ -5,9 +5,6 @@ import com.formdev.flatlaf.FlatLaf;
 import com.formdev.flatlaf.FlatLightLaf;
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.GroupLayout;
-import javax.swing.LayoutStyle;
-import javax.swing.border.*;
 import com.formdev.flatlaf.extras.FlatSVGIcon;
 import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatTextField;
@@ -31,13 +28,59 @@ import net.miginfocom.swing.*;
 public class principal extends javax.swing.JFrame {
     private int searchBarWidth = 300;
     private int searchBarHeigth = 30;
-    private Color searchBarFocusColor = new Color(60,98,140); //60,98,140
+    private Color searchBarFocusColor = new Color(60,98,140);
+    private JScrollPane searcBox = new JScrollPane();
+    private boolean searchBoxCreated = false;
+    private JPopupMenu popupMenu = new JPopupMenu();
+    private ButtonGroup bg = new ButtonGroup();
+    private FlatTextField searchBar = new FlatTextField();
+    
     /**
      * Creates new form principal
      */
     public principal() {
         initComponents();
-       
+
+        // Search Menu Options
+        {
+          JCheckBoxMenuItem propCheckBoxMenuItem = new JCheckBoxMenuItem();
+          propCheckBoxMenuItem.setText("Proprietários");
+          propCheckBoxMenuItem.setMnemonic('P');
+          propCheckBoxMenuItem.setSelected(true);
+          bg.add(propCheckBoxMenuItem);
+          
+          JCheckBoxMenuItem imovCheckBoxMenuItem = new JCheckBoxMenuItem();
+          imovCheckBoxMenuItem.setText("Imóveis");
+          imovCheckBoxMenuItem.setMnemonic('I');
+          imovCheckBoxMenuItem.setSelected(false);
+          bg.add(imovCheckBoxMenuItem);
+          
+          JCheckBoxMenuItem locaCheckBoxMenuItem = new JCheckBoxMenuItem();
+          locaCheckBoxMenuItem.setText("Locatários");
+          locaCheckBoxMenuItem.setMnemonic('L');
+          locaCheckBoxMenuItem.setSelected(false);
+          bg.add(locaCheckBoxMenuItem);
+                    
+          JCheckBoxMenuItem fiadCheckBoxMenuItem = new JCheckBoxMenuItem();
+          fiadCheckBoxMenuItem.setText("Fiadores");
+          fiadCheckBoxMenuItem.setMnemonic('F');
+          fiadCheckBoxMenuItem.setSelected(false);
+          bg.add(fiadCheckBoxMenuItem);
+
+          JCheckBoxMenuItem moviCheckBoxMenuItem = new JCheckBoxMenuItem();
+          moviCheckBoxMenuItem.setText("Movimentos");
+          moviCheckBoxMenuItem.setMnemonic('I');
+          moviCheckBoxMenuItem.setSelected(false);
+          bg.add(moviCheckBoxMenuItem);
+                    
+          popupMenu.add(propCheckBoxMenuItem);
+          popupMenu.add(imovCheckBoxMenuItem);
+          popupMenu.add(locaCheckBoxMenuItem);
+          popupMenu.add(fiadCheckBoxMenuItem);
+          popupMenu.addSeparator();
+          popupMenu.add(moviCheckBoxMenuItem);
+        }        
+                
         FlatSVGIcon themeIcon = new FlatSVGIcon("com/wellspinto/icons/theme.svg",16,16);
         themeIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.WHITE ) );
         JToggleButton themeSet = new JToggleButton((Icon)themeIcon);
@@ -109,7 +152,7 @@ public class principal extends javax.swing.JFrame {
         emailButton.setFocusable(false);
         emailButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Hello User! How are you?", "User", 1));
 
-        FlatTextField searchBar = new FlatTextField();
+        // seachBar Initializacion
         searchBar.setPreferredSize(new Dimension(searchBarWidth, searchBarHeigth));
         searchBar.setMaximumSize(new Dimension(searchBarWidth, searchBarHeigth));
         searchBar.setMinimumSize(new Dimension(searchBarWidth, searchBarHeigth));
@@ -121,25 +164,6 @@ public class principal extends javax.swing.JFrame {
         JButton searchHistoryButton = new JButton((Icon)new FlatSearchWithHistoryIcon(true));
         searchHistoryButton.setToolTipText("Search History");
         searchHistoryButton.addActionListener(e -> {
-          JPopupMenu popupMenu = new JPopupMenu();
-          
-          JCheckBoxMenuItem propCheckBoxMenuItem = new JCheckBoxMenuItem();
-          propCheckBoxMenuItem.setText("Proprietários");
-          propCheckBoxMenuItem.setMnemonic('P');
-          propCheckBoxMenuItem.setSelected(true);
-          
-          JCheckBoxMenuItem imovCheckBoxMenuItem = new JCheckBoxMenuItem();
-          imovCheckBoxMenuItem.setText("Imóveis");
-          imovCheckBoxMenuItem.setMnemonic('I');
-          imovCheckBoxMenuItem.setSelected(false);
-          
-          popupMenu.add(propCheckBoxMenuItem);
-          popupMenu.add(imovCheckBoxMenuItem);
-          popupMenu.add("Locatários");
-          popupMenu.add("Fiadores");
-          popupMenu.addSeparator();
-          popupMenu.add("Recibos");
-          popupMenu.add("Extratos");
           popupMenu.show(searchHistoryButton, 0, searchHistoryButton.getHeight());
         });
         searchBar.putClientProperty("JTextField.leadingComponent", searchHistoryButton);
@@ -167,56 +191,16 @@ public class principal extends javax.swing.JFrame {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                JScrollPane tbl = new JScrollPane();
-                tbl.setSize(300, 300);
-                tbl.setPreferredSize(new Dimension(300,300));
-                tbl.setMaximumSize(new Dimension(300,300));
-                tbl.setMinimumSize(new Dimension(300,300));
-
-                int posEnd = searchBar.getX();
-                int posStart = posEnd - 300;
-                //tbl.setLocation(300, 0);
-                tbl.setLocation(posEnd , 0);
-
-                tbl.setVisible(true);
-                
-                add(tbl,0);
+                searcBox.setVisible(searchBar.getText().trim().length() > 3);
                 repaint();
-                //pack();
+
             }
 
             @Override
             public void keyReleased(KeyEvent e) {
-                
+                searchBox();
             }
         });
-//            int posEnd = searchBar.getX() + searchBarWidth;
-//            int posStart = posEnd - 300;
-//            JWindow wnd = new JWindow();
-//            wnd.setSize(300, 350);
-//            wnd.setLocation(posEnd , searchBar.getY() + searchBar.getHeight());
-//            {
-//                wnd.setLayout(new MigLayout(
-//                    "hidemode 3",
-//                    // columns
-//                    "[fill]" +
-//                    "[153,fill]" +
-//                    "[fill]",
-//                    // rows
-//                    "[]" +
-//                    "[]" +
-//                    "[]" +
-//                    "[]"));
-//
-//                //======== scrollPane1 ========
-//                {
-//                    //scrollPane1.setViewportView(table1);
-//                }
-//                //wnd.add(scrollPane1, "cell 0 0 3 4");
-//                wnd.pack();
-//                wnd.setLocationRelativeTo(wnd.getOwner());
-//            }
-        
         
         searchBar.putClientProperty("JTextField.trailingComponent", searchToolbar);
         searchBar.putClientProperty("JTextField.showClearButton", Boolean.valueOf(true));
@@ -226,8 +210,42 @@ public class principal extends javax.swing.JFrame {
         menuBar.add((Component)printerToolbar);
         menuBar.add((Component)searchBar);
         menuBar.add((Component)emailButton);
+
+       
+
     }
 
+    private void searchBox() {
+        if (!searchBoxCreated) {
+            final int searchBoxWidth = 600;
+            final int searchBoxHeight = 300;
+            //JScrollPane searcBox = new JScrollPane();
+            Dimension searchBoxDimension = new Dimension(searchBoxWidth, searchBoxHeight);
+            searcBox.setSize(searchBoxDimension);
+            searcBox.setPreferredSize(searchBoxDimension);
+            searcBox.setMaximumSize(searchBoxDimension);
+            searcBox.setMinimumSize(searchBoxDimension);
+
+            int posEnd = searchBar.getX();
+            int posStart = posEnd + (32) + searchBarWidth  - searchBoxWidth;
+            searcBox.setLocation(posStart , -2);
+
+            JTable jtbl = new JTable();
+            jtbl.setSize(searchBoxDimension);
+            jtbl.setPreferredSize(searchBoxDimension);
+            jtbl.setMaximumSize(searchBoxDimension);
+            jtbl.setMinimumSize(searchBoxDimension);
+            jtbl.setVisible(true);
+
+            searcBox.add(jtbl);
+
+            add(searcBox,0);
+            searcBox.setVisible(false);
+            searchBoxCreated = true;
+        }            
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -251,16 +269,15 @@ public class principal extends javax.swing.JFrame {
         contentMenuItem = new JMenuItem();
         aboutMenuItem = new JMenuItem();
         desktopPane = new JDesktopPane();
-        internalFrame1 = new JInternalFrame();
         internalFrame2 = new JInternalFrame();
-        jToolBar2 = new JToolBar();
-        jLabel1 = new JLabel();
+        internalFrame1 = new JInternalFrame();
 
         //======== this ========
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobilis");
         setIconImage(new ImageIcon(getClass().getResource("/com/wellspinto/figuras/logo.png")).getImage());
         Container contentPane = getContentPane();
+        contentPane.setLayout(null);
 
         //======== menuBar ========
         {
@@ -342,24 +359,12 @@ public class principal extends javax.swing.JFrame {
 
         //======== desktopPane ========
         {
-            desktopPane.setLayout(null);
-
-            //======== internalFrame1 ========
-            {
-                internalFrame1.setVisible(true);
-                Container internalFrame1ContentPane = internalFrame1.getContentPane();
-                internalFrame1ContentPane.setLayout(new MigLayout(
-                    "hidemode 3",
-                    // columns
-                    "[fill]" +
-                    "[fill]",
-                    // rows
-                    "[]" +
-                    "[]" +
-                    "[]"));
-            }
-            desktopPane.add(internalFrame1);
-            internalFrame1.setBounds(165, 75, 295, 175);
+            desktopPane.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+            desktopPane.setLayout(new GridBagLayout());
+            ((GridBagLayout)desktopPane.getLayout()).columnWidths = new int[] {0, 0, 0, 0, 0};
+            ((GridBagLayout)desktopPane.getLayout()).rowHeights = new int[] {0, 0};
+            ((GridBagLayout)desktopPane.getLayout()).columnWeights = new double[] {0.0, 0.0, 0.0, 0.0, 1.0E-4};
+            ((GridBagLayout)desktopPane.getLayout()).rowWeights = new double[] {0.0, 1.0E-4};
 
             //======== internalFrame2 ========
             {
@@ -375,62 +380,41 @@ public class principal extends javax.swing.JFrame {
                     "[]" +
                     "[]"));
             }
-            desktopPane.add(internalFrame2);
-            internalFrame2.setBounds(20, 55, 205, 215);
+            desktopPane.add(internalFrame2, new GridBagConstraints(0, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 5), 0, 0));
 
+            //======== internalFrame1 ========
             {
-                // compute preferred size
-                Dimension preferredSize = new Dimension();
-                for(int i = 0; i < desktopPane.getComponentCount(); i++) {
-                    Rectangle bounds = desktopPane.getComponent(i).getBounds();
-                    preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
-                    preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
-                }
-                Insets insets = desktopPane.getInsets();
-                preferredSize.width += insets.right;
-                preferredSize.height += insets.bottom;
-                desktopPane.setMinimumSize(preferredSize);
-                desktopPane.setPreferredSize(preferredSize);
+                internalFrame1.setVisible(true);
+                Container internalFrame1ContentPane = internalFrame1.getContentPane();
+                internalFrame1ContentPane.setLayout(new GridBagLayout());
+                ((GridBagLayout)internalFrame1ContentPane.getLayout()).columnWidths = new int[] {0, 0, 0};
+                ((GridBagLayout)internalFrame1ContentPane.getLayout()).rowHeights = new int[] {0, 0, 0, 0};
+                ((GridBagLayout)internalFrame1ContentPane.getLayout()).columnWeights = new double[] {0.0, 0.0, 1.0E-4};
+                ((GridBagLayout)internalFrame1ContentPane.getLayout()).rowWeights = new double[] {0.0, 0.0, 0.0, 1.0E-4};
             }
+            desktopPane.add(internalFrame1, new GridBagConstraints(3, 0, 1, 1, 0.0, 0.0,
+                GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+                new Insets(0, 0, 0, 0), 0, 0));
         }
+        contentPane.add(desktopPane);
+        desktopPane.setBounds(0, -30, 635, 470);
 
-        //======== jToolBar2 ========
         {
-            jToolBar2.setRollover(true);
-            jToolBar2.setMargin(new Insets(5, 5, 5, 5));
-
-            //---- jLabel1 ----
-            jLabel1.setIcon(new ImageIcon("C:\\Users\\YOGA 510\\Pictures\\Sici\\lockkey.png"));
-            jLabel1.setBorder(new EtchedBorder());
-            jLabel1.setPreferredSize(new Dimension(300, 404));
-            jLabel1.setMaximumSize(new Dimension(300, 404));
-            jLabel1.setMinimumSize(new Dimension(300, 404));
-            jToolBar2.add(jLabel1);
+            // compute preferred size
+            Dimension preferredSize = new Dimension();
+            for(int i = 0; i < contentPane.getComponentCount(); i++) {
+                Rectangle bounds = contentPane.getComponent(i).getBounds();
+                preferredSize.width = Math.max(bounds.x + bounds.width, preferredSize.width);
+                preferredSize.height = Math.max(bounds.y + bounds.height, preferredSize.height);
+            }
+            Insets insets = contentPane.getInsets();
+            preferredSize.width += insets.right;
+            preferredSize.height += insets.bottom;
+            contentPane.setMinimumSize(preferredSize);
+            contentPane.setPreferredSize(preferredSize);
         }
-
-        GroupLayout contentPaneLayout = new GroupLayout(contentPane);
-        contentPane.setLayout(contentPaneLayout);
-        contentPaneLayout.setHorizontalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(desktopPane)
-                            .addGap(141, 141, 141))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(jToolBar2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGap(318, 318, 318))))
-        );
-        contentPaneLayout.setVerticalGroup(
-            contentPaneLayout.createParallelGroup()
-                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jToolBar2, GroupLayout.PREFERRED_SIZE, 69, GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(desktopPane, GroupLayout.DEFAULT_SIZE, 285, Short.MAX_VALUE)
-                    .addGap(98, 98, 98))
-        );
         pack();
         setLocationRelativeTo(getOwner());
     }// </editor-fold>//GEN-END:initComponents
@@ -496,10 +480,8 @@ public class principal extends javax.swing.JFrame {
     private JMenuItem contentMenuItem;
     private JMenuItem aboutMenuItem;
     private JDesktopPane desktopPane;
-    private JInternalFrame internalFrame1;
     private JInternalFrame internalFrame2;
-    private JToolBar jToolBar2;
-    private JLabel jLabel1;
+    private JInternalFrame internalFrame1;
     // End of variables declaration//GEN-END:variables
 
 }

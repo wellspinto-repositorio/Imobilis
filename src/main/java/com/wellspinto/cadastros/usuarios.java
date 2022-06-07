@@ -35,7 +35,7 @@ public class usuarios extends javax.swing.JInternalFrame {
         textField3 = new JTextField();
         label5 = new JLabel();
         passwordField1 = new JPasswordField();
-        button1 = new JButton();
+        btnIncluir = new JButton();
         button2 = new JButton();
         checkBox1 = new JCheckBox();
 
@@ -58,8 +58,9 @@ public class usuarios extends javax.swing.JInternalFrame {
         //---- label5 ----
         label5.setText("Senha:");
 
-        //---- button1 ----
-        button1.setText("text");
+        //---- btnIncluir ----
+        btnIncluir.setText("Incluir");
+        btnIncluir.setIcon(new ImageIcon(getClass().getResource("/com/wellspinto/icons/intellij-showWriteAccess.png")));
 
         //---- button2 ----
         button2.setText("text");
@@ -100,7 +101,7 @@ public class usuarios extends javax.swing.JInternalFrame {
                                     .addGap(18, 18, 18)
                                     .addComponent(checkBox1))))
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(button1)
+                            .addComponent(btnIncluir)
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(button2)))
                     .addContainerGap(14, Short.MAX_VALUE))
@@ -133,7 +134,7 @@ public class usuarios extends javax.swing.JInternalFrame {
                             .addComponent(checkBox1)))
                     .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(button1)
+                        .addComponent(btnIncluir)
                         .addComponent(button2))
                     .addContainerGap(7, Short.MAX_VALUE))
         );
@@ -150,7 +151,7 @@ public class usuarios extends javax.swing.JInternalFrame {
     private JTextField textField3;
     private JLabel label5;
     private JPasswordField passwordField1;
-    private JButton button1;
+    private JButton btnIncluir;
     private JButton button2;
     private JCheckBox checkBox1;
     // End of variables declaration//GEN-END:variables

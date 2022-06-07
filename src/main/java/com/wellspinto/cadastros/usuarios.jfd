@@ -4,8 +4,8 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :::p, par l {seq {comp label3:::p:130:p, par l {seq l {par l {seq {space :p:19:p, comp label1:::p::p}, seq {space s:::p, comp label2:::p::p}, seq t {space :::p, par l {comp label4::t:p:36:p, comp label5::t:p:36:p}}}, space :::p, par l {comp textField2:::p:178:p, comp textField1:::p:56:p, comp textField3::l:p:178:p, comp passwordField1::l:p:178:p}}, seq l {space :p:18:p, comp checkBox1:::p::p}}}, seq l {comp button1:::p::p, space :::p, comp button2:::p::p}}, space ::14:x}}"
-			"$verticalGroup": "par l {seq {space :::p, par l:::p {comp label3:::p:131:p, seq {par l {par b:l {comp label1::b:p::p, comp textField1::b:p::p}, seq l {space :p:28:p, par b {comp textField2::b:p::p, comp label2::b:p::p}, space :::p, par b {comp textField3::b:p::p, comp label4::b:p::p}}}, space :::p, par b {comp passwordField1::b:p::p, comp label5::b:p::p}, space :::x, comp checkBox1:::p::p}}, space u:::p, par b {comp button1::b:p::p, comp button2::b:p::p}, space ::7:x}}"
+			"$horizontalGroup": "par l {seq {space :::p, par l {seq {comp label3:::p:130:p, par l {seq l {par l {seq {space :p:19:p, comp label1:::p::p}, seq {space s:::p, comp label2:::p::p}, seq t {space :::p, par l {comp label4::t:p:36:p, comp label5::t:p:36:p}}}, space :::p, par l {comp textField2:::p:178:p, comp textField1:::p:56:p, comp textField3::l:p:178:p, comp passwordField1::l:p:178:p}}, seq l {space :p:18:p, comp checkBox1:::p::p}}}, seq l {comp btnIncluir:::p::p, space :::p, comp button2:::p::p}}, space ::14:x}}"
+			"$verticalGroup": "par l {seq {space :::p, par l:::p {comp label3:::p:131:p, seq {par l {par b:l {comp label1::b:p::p, comp textField1::b:p::p}, seq l {space :p:28:p, par b {comp textField2::b:p::p, comp label2::b:p::p}, space :::p, par b {comp textField3::b:p::p, comp label4::b:p::p}}}, space :::p, par b {comp passwordField1::b:p::p, comp label5::b:p::p}, space :::x, comp checkBox1:::p::p}}, space u:::p, par b {comp btnIncluir::b:p::p, comp button2::b:p::p}, space ::7:x}}"
 		} ) {
 			name: "this"
 			"visible": true
@@ -42,8 +42,9 @@ new FormModel {
 				name: "passwordField1"
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button1"
-				"text": "text"
+				name: "btnIncluir"
+				"text": "Incluir"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/wellspinto/icons/intellij-showWriteAccess.png" )
 			} )
 			add( new FormComponent( "javax.swing.JButton" ) {
 				name: "button2"

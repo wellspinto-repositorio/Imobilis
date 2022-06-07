@@ -5,7 +5,6 @@ import com.wellspinto.funcoes.Globais;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.net.URL;
-import java.sql.Connection;
 import javax.swing.ImageIcon;
 
 /**

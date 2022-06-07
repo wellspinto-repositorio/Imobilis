@@ -1,6 +1,7 @@
 package com.wellspinto.funcoes;
 
 import java.util.ArrayList;
+import java.util.prefs.Preferences;
 
 public class Globais {
     /***************************************************************************
@@ -10,6 +11,7 @@ public class Globais {
      * ----------------------------------------------------------------------- *
      * 
     */
+    static public Preferences prefs = Preferences.userRoot();
     static public Db conn = null;
     static public String sqlDrive = "com.mysql.cj.jdbc.Driver";
     static public String sqlUrl = "jdbc:mysql://";
@@ -26,6 +28,6 @@ public class Globais {
     
     static public void ReadSiciParameters() {
         // Parametros de conexção do banco de dados
-        remote = System.getProperty("Remote", sqlAlias + "," + sqlHost + ":" + sqlPort + "," + sqlDbName);
+        remote = prefs.get("Remote", sqlAlias + "," + sqlHost + ":" + sqlPort + "," + sqlDbName);
     }
 }
