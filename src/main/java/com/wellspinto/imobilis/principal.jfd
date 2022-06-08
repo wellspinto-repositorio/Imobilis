@@ -7,7 +7,7 @@ new FormModel {
 			name: "this"
 			"defaultCloseOperation": 3
 			"title": "Imobilis"
-			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/com/wellspinto/figuras/logo.png" )
+			"iconImage": new com.jformdesigner.model.SwingIcon( 0, "/figuras/logo.png" )
 			add( new FormContainer( "javax.swing.JDesktopPane", new FormLayoutManager( class java.awt.GridBagLayout ) {
 				"$columnSpecs": "0, 0, 0, 0"
 				"$rowSpecs": "0"

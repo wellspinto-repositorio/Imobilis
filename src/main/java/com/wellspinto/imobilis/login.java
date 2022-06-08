@@ -25,7 +25,8 @@ public class login extends javax.swing.JFrame {
         
         
         // background
-        URL url = getClass().getClassLoader().getResource("com/wellspinto/figuras/login.png");
+        URL url = getClass().getResource("/figuras/login.png");
+        
         ImageIcon icone = new ImageIcon(url);
         //setIconImage(icone.getImage());
         backGround.setIcon(icone);

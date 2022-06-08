@@ -81,7 +81,7 @@ public class principal extends javax.swing.JFrame {
           popupMenu.add(moviCheckBoxMenuItem);
         }        
                 
-        FlatSVGIcon themeIcon = new FlatSVGIcon("com/wellspinto/icons/theme.svg",16,16);
+        FlatSVGIcon themeIcon = new FlatSVGIcon("/icons/theme.svg",16,16);
         themeIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.WHITE ) );
         JToggleButton themeSet = new JToggleButton((Icon)themeIcon);
         themeSet.setToolTipText("Tema Claro ou Escuro.");
@@ -103,7 +103,7 @@ public class principal extends javax.swing.JFrame {
 
         });
         
-        FlatSVGIcon laserIconPrinter = new FlatSVGIcon("com/wellspinto/icons/laserPrinterOff.svg");
+        FlatSVGIcon laserIconPrinter = new FlatSVGIcon("/icons/laserPrinterOff.svg");
         JToggleButton laserPrinter = new JToggleButton((Icon)laserIconPrinter);
         laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
         laserPrinter.addActionListener((e) -> {
@@ -114,7 +114,7 @@ public class principal extends javax.swing.JFrame {
             }
         });
         
-        FlatSVGIcon thermalIconPrinter = new FlatSVGIcon("com/wellspinto/icons/thermalPrinterDisabled.svg",16,16);
+        FlatSVGIcon thermalIconPrinter = new FlatSVGIcon("/icons/thermalPrinterDisabled.svg",16,16);
         JToggleButton thermalPrinter = new JToggleButton((Icon)thermalIconPrinter);
         thermalPrinter.setToolTipText("Impressora Laser esta Desativada.");
         thermalPrinter.addActionListener((e) -> {
@@ -147,7 +147,7 @@ public class principal extends javax.swing.JFrame {
         printerToolbar.addSeparator();
         
         FlatButton emailButton = new FlatButton();
-        emailButton.setIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/users.svg"));
+        emailButton.setIcon((Icon)new FlatSVGIcon("/icons/users.svg"));
         emailButton.setButtonType(FlatButton.ButtonType.toolBarButton);
         emailButton.setFocusable(false);
         emailButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Hello User! How are you?", "User", 1));
@@ -168,13 +168,13 @@ public class principal extends javax.swing.JFrame {
         });
         searchBar.putClientProperty("JTextField.leadingComponent", searchHistoryButton);
         
-        JToggleButton matchCaseButton = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/matchCase.svg"));
-        matchCaseButton.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/matchCaseHovered.svg"));
-        matchCaseButton.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/matchCaseSelected.svg"));
+        JToggleButton matchCaseButton = new JToggleButton((Icon)new FlatSVGIcon("/icons/matchCase.svg"));
+        matchCaseButton.setRolloverIcon((Icon)new FlatSVGIcon("/icons/matchCaseHovered.svg"));
+        matchCaseButton.setSelectedIcon((Icon)new FlatSVGIcon("/icons/matchCaseSelected.svg"));
         matchCaseButton.setToolTipText("Caso Sensitivo");
-        JToggleButton wordsButton = new JToggleButton((Icon)new FlatSVGIcon("com/wellspinto/icons/words.svg"));
-        wordsButton.setRolloverIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/wordsHovered.svg"));
-        wordsButton.setSelectedIcon((Icon)new FlatSVGIcon("com/wellspinto/icons/wordsSelected.svg"));
+        JToggleButton wordsButton = new JToggleButton((Icon)new FlatSVGIcon("/icons/words.svg"));
+        wordsButton.setRolloverIcon((Icon)new FlatSVGIcon("/icons/wordsHovered.svg"));
+        wordsButton.setSelectedIcon((Icon)new FlatSVGIcon("/icons/wordsSelected.svg"));
         wordsButton.setToolTipText("Frase Inteira");
     
         searchBar.setPlaceholderText("Busca Globalizada");
@@ -275,7 +275,7 @@ public class principal extends javax.swing.JFrame {
         //======== this ========
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobilis");
-        setIconImage(new ImageIcon(getClass().getResource("/com/wellspinto/figuras/logo.png")).getImage());
+        setIconImage(new ImageIcon(getClass().getResource("/figuras/logo.png")).getImage());
         Container contentPane = getContentPane();
         contentPane.setLayout(null);
 
