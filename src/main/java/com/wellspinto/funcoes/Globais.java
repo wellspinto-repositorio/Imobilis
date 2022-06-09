@@ -26,8 +26,13 @@ public class Globais {
     static public String  remote  = "";
     static public ArrayList<String[]> units = new ArrayList<>();
     
+    static public String backGround = "";
+    
     static public void ReadSiciParameters() {
         // Parametros de conexção do banco de dados
         remote = prefs.get("Remote", sqlAlias + "," + sqlHost + ":" + sqlPort + "," + sqlDbName);
+        
+        // Parametros do WorkArea
+        backGround = prefs.get("BackGround", "");
     }
 }
