@@ -18,7 +18,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import javax.print.PrintService;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -54,9 +53,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
     public MenuPrincipal() {
         initComponents();
 
-        setTitle("Imobilis");
+        setTitle(".:: Imobilis ::.");
         setIconImage(new ImageIcon(getClass().getResource("/figuras/logo.png")).getImage());
         InitSettings();
+        
+        userName.setText(Globais.userName);
+        hostName.setText(Globais.sqlAlias);
     }
 
     private void InitSettings() {
@@ -122,24 +124,30 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         });
         
-        FlatSVGIcon laserIconPrinter = new FlatSVGIcon("icons/laserPrinterOff.svg");
-        JToggleButton laserPrinter = new JToggleButton((Icon)laserIconPrinter);
+        FlatSVGIcon laserIconPrinter = new FlatSVGIcon("icons/laser.svg",16,16);
+        laserIconPrinter.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.red ) );
+        JToggleButton laserPrinter = new JToggleButton((Icon)laserIconPrinter);                        
         laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
         laserPrinter.addActionListener((e) -> {
             if (laserPrinter.isSelected()) {
-                laserPrinter.setToolTipText("Impressora Laser esta Ativa.");
+                laserIconPrinter.setColorFilter( new FlatSVGIcon.ColorFilter( color -> new Color(50,205,50) ) );
+                laserPrinter.setToolTipText("Impressora Laser esta Ativa."); 
             } else {
+                laserIconPrinter.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.red ) );
                 laserPrinter.setToolTipText("Impressora Laser esta Desativada.");
             }
         });
         
-        FlatSVGIcon thermalIconPrinter = new FlatSVGIcon("icons/thermalPrinterDisabled.svg",16,16);
+        FlatSVGIcon thermalIconPrinter = new FlatSVGIcon("icons/thermal.svg",16,16);
+        thermalIconPrinter.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.red ) );
         JToggleButton thermalPrinter = new JToggleButton((Icon)thermalIconPrinter);
-        thermalPrinter.setToolTipText("Impressora Laser esta Desativada.");
+        thermalPrinter.setToolTipText("Impressora Thermica esta Desativada.");
         thermalPrinter.addActionListener((e) -> {
             if (thermalPrinter.isSelected()) {
+                thermalIconPrinter.setColorFilter( new FlatSVGIcon.ColorFilter( color -> new Color(50,205,50) ) );
                 thermalPrinter.setToolTipText("Impressora Thermica esta Ativa.");
             } else {
+                thermalIconPrinter.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.red ) );
                 thermalPrinter.setToolTipText("Impressora Thermica esta Desativada.");
             }
         });
@@ -166,7 +174,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         printerToolbar.addSeparator();
         
         FlatButton emailButton = new FlatButton();
-        emailButton.setIcon((Icon)new FlatSVGIcon("icons/users.svg"));
+        emailButton.setIcon((Icon)new FlatSVGIcon("icons/carta.svg",16,16));
         emailButton.setButtonType(FlatButton.ButtonType.toolBarButton);
         emailButton.setFocusable(false);
         emailButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Hello User! How are you?", "User", 1));
@@ -275,9 +283,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
         WorkArea = new BackGroundDeskTopPane(Globais.backGround);
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        userName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
+        hostName = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -301,13 +309,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Usuário:");
+        jLabel1.setText("Usuário Logado:");
 
-        jLabel2.setText("Wellington");
-
-        jLabel3.setText("Local:");
-
-        jLabel4.setText("Máquina Local");
+        jLabel3.setText("Local na Rede:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -317,11 +321,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 259, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(hostName, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -330,9 +334,9 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, 0)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jLabel2)
+                    .addComponent(userName)
                     .addComponent(jLabel3)
-                    .addComponent(jLabel4))
+                    .addComponent(hostName))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -473,16 +477,16 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel hostName;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;
     private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 
 }

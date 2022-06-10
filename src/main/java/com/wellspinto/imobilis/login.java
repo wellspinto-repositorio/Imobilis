@@ -5,7 +5,10 @@ import com.wellspinto.funcoes.Globais;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,6 +16,7 @@ import javax.swing.ImageIcon;
  */
 public class login extends javax.swing.JFrame {
     private Db conn = null;
+    private int tentativas = 1;
     
     /**
      * Creates new form login
@@ -136,6 +140,7 @@ public class login extends javax.swing.JFrame {
             int _port = Integer.parseInt(selUnit[1].toString().substring(selUnit[1].toString().indexOf(":") + 1));
             String _dbname = selUnit[2].toString();
             
+            Globais.sqlAlias = selUnit[0].toString();
             Globais.sqlHost = _host;
             Globais.sqlPort = _port;
             Globais.sqlDbName = _dbname;
@@ -166,6 +171,11 @@ public class login extends javax.swing.JFrame {
 
     private void usuarioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_usuarioKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            if (usuario.getText().trim().equalsIgnoreCase("")) {
+                usuario.requestFocus();
+                return;
+            }
+            
             jUnidade.setEnabled(true);
             usuario.setEnabled(true);
             senha.setEnabled(true);
@@ -180,10 +190,40 @@ public class login extends javax.swing.JFrame {
 
     private void senhaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_senhaKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            dispose();
-            MenuPrincipal pr = new MenuPrincipal();
-            pr.setVisible(true);
-            pr.pack();
+            if (senha.getText().trim().equalsIgnoreCase("")) {
+                senha.requestFocus();
+                return;
+            }
+                
+            String selectSQL = "SELECT `id`, `nome`, `resenha`, `foto`, `menu` FROM `usuarios` WHERE `login` = :login AND `senha` = :senha LIMIT 1;";
+            Object[][] param = {
+              {"string", "login", usuario.getText().trim()},
+              {"string", "senha", senha.getText().trim()}
+            };
+            ResultSet lgrs = conn.OpenTable(selectSQL, param);
+            boolean isUser = false;
+            try {
+                while (lgrs.next()) {
+                    isUser = true;
+                    Globais.userName = lgrs.getString("nome");
+                    Globais.userId = lgrs.getString("id");
+                }
+            } catch (SQLException e) {}
+            conn.CloseTable(lgrs);            
+            
+            if (isUser) {
+                dispose();
+                MenuPrincipal pr = new MenuPrincipal();
+                pr.setVisible(true);
+                pr.pack();
+            } else {
+                tentativas += 1;
+                if (tentativas > 3) {
+                    JOptionPane.showMessageDialog(this, "Usuário e/ou Senha inválidos!!!\n\nVocê exedeu o limite máximo de Tentativas!!!\nO Administradosr do sistema recebera um aviso...", "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
+                    System.exit(0);
+                } else JOptionPane.showMessageDialog(this, "Usuário e/ou Senha inválidos!!!\n\nTente Novamente...", "Atenção!!!", JOptionPane.INFORMATION_MESSAGE);
+                usuario.requestFocus();
+            }
         } else if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
             senha.setText("");
             usuario.requestFocus();

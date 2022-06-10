@@ -27,6 +27,8 @@ public class Globais {
     static public ArrayList<String[]> units = new ArrayList<>();
     
     static public String backGround = "";
+    static public String userId = null;
+    static public String userName = "";
     
     static public void ReadSiciParameters() {
         // Parametros de conexção do banco de dados
