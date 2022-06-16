@@ -4,27 +4,36 @@ new FormModel {
 	contentType: "form/swing"
 	root: new FormRoot {
 		add( new FormContainer( "javax.swing.JInternalFrame", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
-			"$horizontalGroup": "par l {seq {space :::p, par l {seq {comp label3:::p:130:p, par l {seq l {par l {seq {space :p:19:p, comp label1:::p::p}, seq {space s:::p, comp label2:::p::p}, seq t {space :::p, par l {comp label4::t:p:36:p, comp label5::t:p:36:p}}}, space :::p, par l {comp textField2:::p:178:p, comp textField1:::p:56:p, comp textField3::l:p:178:p, comp passwordField1::l:p:178:p}}, seq l {space :p:18:p, comp checkBox1:::p::p}}}, seq l {comp btnIncluir:::p::p, space :::p, comp button2:::p::p}}, space ::14:x}}"
-			"$verticalGroup": "par l {seq {space :::p, par l:::p {comp label3:::p:131:p, seq {par l {par b:l {comp label1::b:p::p, comp textField1::b:p::p}, seq l {space :p:28:p, par b {comp textField2::b:p::p, comp label2::b:p::p}, space :::p, par b {comp textField3::b:p::p, comp label4::b:p::p}}}, space :::p, par b {comp passwordField1::b:p::p, comp label5::b:p::p}, space :::x, comp checkBox1:::p::p}}, space u:::p, par b {comp btnIncluir::b:p::p, comp button2::b:p::p}, space ::7:x}}"
+			"$horizontalGroup": "par l {seq l {space :::p, par l {seq t {comp foto:::p:130:p, par l {seq l {space :p:19:p, comp label1:::p::p, space :p:22:p, comp id:::p:56:p, space u:::p, comp label2:::p::p, space :::p, comp nome::::422:x}, seq l {space :p:12:p, comp label4:::p:36:p, space :p:12:p, comp login:::p:178:p, space :::p, comp label5:::p:36:p, space :::p, comp senha:::p:178:p, space ::15:x, comp redefine:::p::p}, seq t {space :::p, comp label9::::580:x}}}, comp panel1::l:::x, comp panel2::l::716:x}, space :::p}}"
+			"$verticalGroup": "par l {seq {space :::p, par l:::p {comp foto:::p:131:p, seq {par b {comp label1::b:p::p, comp id::b:p::p, comp label2::b:p::p, comp nome::b:p::p}, space :::p, par b {comp label4::b:p::p, comp senha::b:p::p, comp label5::b:p::p, comp redefine::b:p::p, comp login::b:p::p}, space :::x, comp label9:::p:39:p}}, space :::p, comp panel2:::::x, space :::p, comp panel1:::p::p, space :::p}}"
 		} ) {
 			name: "this"
 			"visible": true
+			"title": ".:: Cadastro de Usuários."
+			"iconifiable": true
+			"frameIcon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/usuarios.png" )
+			"resizable": true
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "Id:"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField1"
+				name: "id"
+				"editable": false
+				"focusable": false
+				"font": new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+				"horizontalAlignment": 0
+				"text": "0"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label2"
 				"text": "Nome:"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField2"
+				name: "nome"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
-				name: "label3"
+				name: "foto"
 				"border": new javax.swing.border.BevelBorder( 1, null, null, null, null )
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
@@ -32,31 +41,117 @@ new FormModel {
 				"text": "Login:"
 			} )
 			add( new FormComponent( "javax.swing.JTextField" ) {
-				name: "textField3"
+				name: "login"
 			} )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label5"
 				"text": "Senha:"
 			} )
 			add( new FormComponent( "javax.swing.JPasswordField" ) {
-				name: "passwordField1"
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "btnIncluir"
-				"text": "Incluir"
-				"icon": new com.jformdesigner.model.SwingIcon( 0, "/com/wellspinto/icons/intellij-showWriteAccess.png" )
-			} )
-			add( new FormComponent( "javax.swing.JButton" ) {
-				name: "button2"
-				"text": "text"
+				name: "senha"
 			} )
 			add( new FormComponent( "javax.swing.JCheckBox" ) {
-				name: "checkBox1"
-				"text": "Redefinir senha ao logar."
+				name: "redefine"
+				"text": "Redefinir senha."
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {seq l {space :::p, comp btnIncluir:::p::p, space :::p, comp btnAlterar:::p::p, space :::p, comp btnExcluir:::p::p, space :p:29:p, comp btnPesquisar:::p::p, space ::31:x, comp btnGravar:::p::p, space :::p, comp btnRetornar:::p::p, space :::p}}"
+				"$verticalGroup": "par l {seq l {space :::p, par b {comp btnRetornar::b:p::p, comp btnGravar::b:p::p, comp btnIncluir::b:p::p, comp btnAlterar::b:p::p, comp btnExcluir::b:p::p, comp btnPesquisar::b:p::p}, space :::x}}"
+			} ) {
+				name: "panel1"
+				"border": &EtchedBorder0 new javax.swing.border.EtchedBorder( 1, null, null )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnIncluir"
+					"text": "Incluir"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/user-add.png" )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnAlterar"
+					"text": "Alterar"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/user-edit.png" )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnExcluir"
+					"text": "Ecluir"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/user-delete.png" )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnPesquisar"
+					"text": "Pesquisar"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/lupa.png" )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnGravar"
+					"text": "Gravar"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/save.png" )
+				} )
+				add( new FormComponent( "javax.swing.JButton" ) {
+					name: "btnRetornar"
+					"text": "Retornar"
+					"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/sair.png" )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnRetornar", true ) )
+					addEvent( new FormEvent( "java.awt.event.ActionListener", "actionPerformed", "btnRetornar", true ) )
+				} )
+			} )
+			add( new FormContainer( "javax.swing.JPanel", new FormLayoutManager( class org.jdesktop.layout.GroupLayout ) {
+				"$horizontalGroup": "par l {seq t {space :::p, par t {comp scrollPane1:::::x, seq t {comp label6:::p:51:p, space :::p, comp label7:::p:275:p, space :::p, comp label8:::p:315:p, space :::x, comp label10:::p:45:p}}, space :::p}}"
+				"$verticalGroup": "par l {seq l {space :::p, par b {comp label6::b:p::p, comp label7::b:p::p, comp label8::b:p::p, comp label10::b:p::p}, space :::p, comp scrollPane1::::177:x, space :::p}}"
+			} ) {
+				name: "panel2"
+				"border": #EtchedBorder0
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label6"
+					"text": "Seleção"
+					"background": &Color0 new java.awt.Color( 153, 153, 255, 255 )
+					"opaque": true
+					"foreground": &Color1 new java.awt.Color( 0, 0, 0, 255 )
+					"font": &SwingDerivedFont0 new com.jformdesigner.model.SwingDerivedFont( null, 1, 0, false )
+					"border": &SwingBorder0 new com.jformdesigner.model.SwingBorder( "Button.border" )
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label7"
+					"text": "Menu"
+					"background": #Color0
+					"opaque": true
+					"foreground": #Color1
+					"font": #SwingDerivedFont0
+					"border": #SwingBorder0
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label8"
+					"text": "Opções"
+					"background": #Color0
+					"opaque": true
+					"foreground": #Color1
+					"font": #SwingDerivedFont0
+					"border": #SwingBorder0
+				} )
+				add( new FormContainer( "javax.swing.JScrollPane", new FormLayoutManager( class javax.swing.JScrollPane ) ) {
+					name: "scrollPane1"
+					"border": sfield com.jformdesigner.model.FormObject NULL_VALUE
+					"horizontalScrollBarPolicy": 31
+					"verticalScrollBarPolicy": 22
+				} )
+				add( new FormComponent( "javax.swing.JLabel" ) {
+					name: "label10"
+					"text": "Senha"
+					"background": #Color0
+					"opaque": true
+					"foreground": #Color1
+					"font": #SwingDerivedFont0
+					"border": #SwingBorder0
+				} )
+			} )
+			add( new FormComponent( "javax.swing.JLabel" ) {
+				name: "label9"
+				"text": "Configurações de Acesso"
+				"icon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/menu.png" )
+				"opaque": true
+				"background": sfield java.awt.SystemColor windowBorder
 			} )
 		}, new FormLayoutConstraints( null ) {
-			"size": new java.awt.Dimension( 400, 215 )
-			"location": new java.awt.Point( 5, 5 )
+			"size": new java.awt.Dimension( 740, 470 )
+			"location": new java.awt.Point( 0, 10 )
 		} )
 	}
 }

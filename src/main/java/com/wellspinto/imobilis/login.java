@@ -4,9 +4,14 @@ import com.wellspinto.funcoes.Db;
 import com.wellspinto.funcoes.Globais;
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.sql.Blob;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -207,6 +212,18 @@ public class login extends javax.swing.JFrame {
                     isUser = true;
                     Globais.userName = lgrs.getString("nome");
                     Globais.userId = lgrs.getString("id");
+                    
+                    // Recuperar foto usuário
+                    Blob blobFoto = null;
+                    try { lgrs.getBlob("foto"); } catch (SQLException e) {}
+                    InputStream inputStreamFoto = null; BufferedImage bufferedImageFoto = null;
+                    if (blobFoto != null) {
+                        inputStreamFoto = blobFoto.getBinaryStream();
+                        try {bufferedImageFoto = ImageIO.read(inputStreamFoto);} catch (IOException iox) {}
+                    }
+                    Globais.userFoto = bufferedImageFoto;
+                    
+                    Globais.userMenu = lgrs.getString("menu");
                 }
             } catch (SQLException e) {}
             conn.CloseTable(lgrs);            

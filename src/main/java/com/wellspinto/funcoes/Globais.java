@@ -1,5 +1,6 @@
 package com.wellspinto.funcoes;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.prefs.Preferences;
 
@@ -29,6 +30,8 @@ public class Globais {
     static public String backGround = "";
     static public String userId = null;
     static public String userName = "";
+    static public Image userFoto = null;
+    static public String userMenu = null;
     
     static public void ReadSiciParameters() {
         // Parametros de conexção do banco de dados

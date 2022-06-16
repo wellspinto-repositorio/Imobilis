@@ -25,6 +25,9 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
@@ -38,6 +41,8 @@ import javax.swing.UIManager;
  * @author YOGA 510
  */
 public class MenuPrincipal extends javax.swing.JFrame {
+    private JMenuBar menuBar;
+    
     private int searchBarWidth = 300;
     private int searchBarHeigth = 30;
     private Color searchBarFocusColor = new Color(60,98,140);
@@ -55,12 +60,79 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         setTitle(".:: Imobilis ::.");
         setIconImage(new ImageIcon(getClass().getResource("/figuras/logo.png")).getImage());
+        
+        // Setar Menu
+        super.setJMenuBar(MontarMenu());
+
+        // Inicializa componentes próprios
         InitSettings();
         
         userName.setText(Globais.userName);
         hostName.setText(Globais.sqlAlias);
     }
 
+    private JMenuBar MontarMenu() {
+        menuBar = new JMenuBar();  
+        
+        // Cria menus do Sistema
+        SetarMenu();
+        
+        //Cria o menu Sair  
+        JMenu menuSair = new JMenu("Sair");  
+        
+        // Opção LogOut do menu Sair
+        JMenuItem itemSair = new javax.swing.JMenuItem();
+        itemSair.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_Q, java.awt.event.InputEvent.CTRL_MASK));
+        FlatSVGIcon logoutIcon = new FlatSVGIcon("icons/logout.svg",16,16);
+        logoutIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.RED ) );        
+        itemSair.setIcon((Icon)logoutIcon); 
+        itemSair.setText("Logout");
+        itemSair.setToolTipText("Logout do sistema...");
+        itemSair.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dispose();
+
+                Globais.conn = null;
+                try {
+                    login lg = new login();
+                    lg.setVisible(true);
+                    lg.pack();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        });
+        menuSair.add(itemSair);
+
+        // Opção Encerrar o Sistema do menu Sair
+        JMenuItem itemFechar = new javax.swing.JMenuItem();
+        itemFechar.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_E, java.awt.event.InputEvent.CTRL_MASK));
+        FlatSVGIcon exitIcon = new FlatSVGIcon("icons/system-exit.svg",16,16);
+        exitIcon.setColorFilter( new FlatSVGIcon.ColorFilter( color -> Color.BLACK ) );        
+        itemFechar.setIcon((Icon)exitIcon);
+        itemFechar.setText("Encerrar o Sistema");
+        itemFechar.setToolTipText("Sai completamente do programa...");
+        itemFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                System.exit(0);
+            }
+        });
+        menuSair.add(itemFechar);
+        
+        //Adiciona o menu na barra  
+        menuBar.add(menuSair);
+        
+        return menuBar;
+    }
+    
+    // Monta o Menu do usuário
+    private void SetarMenu() {    
+        String menu = Globais.userMenu;
+        String[] amenu = menu.split(";");
+        
+        System.out.println("");
+    }
+    
     private void InitSettings() {
         // Search Menu Options
         {
@@ -286,20 +358,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         userName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         hostName = new javax.swing.JLabel();
-        menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
-        saveAsMenuItem = new javax.swing.JMenuItem();
-        exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
-        pasteMenuItem = new javax.swing.JMenuItem();
-        deleteMenuItem = new javax.swing.JMenuItem();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Imobilis");
@@ -340,69 +398,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("File");
-
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Open");
-        fileMenu.add(openMenuItem);
-
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Save");
-        fileMenu.add(saveMenuItem);
-
-        saveAsMenuItem.setMnemonic('a');
-        saveAsMenuItem.setText("Save As ...");
-        saveAsMenuItem.setDisplayedMnemonicIndex(5);
-        fileMenu.add(saveAsMenuItem);
-
-        exitMenuItem.setMnemonic('x');
-        exitMenuItem.setText("Exit");
-        exitMenuItem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                exitMenuItemActionPerformed(evt);
-            }
-        });
-        fileMenu.add(exitMenuItem);
-
-        menuBar.add(fileMenu);
-
-        editMenu.setMnemonic('e');
-        editMenu.setText("Edit");
-
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Cut");
-        editMenu.add(cutMenuItem);
-
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Copy");
-        editMenu.add(copyMenuItem);
-
-        pasteMenuItem.setMnemonic('p');
-        pasteMenuItem.setText("Paste");
-        editMenu.add(pasteMenuItem);
-
-        deleteMenuItem.setMnemonic('d');
-        deleteMenuItem.setText("Delete");
-        editMenu.add(deleteMenuItem);
-
-        menuBar.add(editMenu);
-
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
-
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
-
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
-
-        menuBar.add(helpMenu);
-
-        setJMenuBar(menuBar);
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -413,23 +408,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(WorkArea, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                .addComponent(WorkArea, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
                 .addGap(0, 0, 0)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
-        this.dispose();
-        
-        Globais.conn = null;
-        
-        login lg = new login();
-        lg.setVisible(true);
-        lg.pack();
-    }//GEN-LAST:event_exitMenuItemActionPerformed
 
     /**
      * @param args the command line arguments
@@ -468,53 +453,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane WorkArea;
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
-    private javax.swing.JMenuItem deleteMenuItem;
-    private javax.swing.JMenu editMenu;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
-    private javax.swing.JMenu helpMenu;
     private javax.swing.JLabel hostName;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem pasteMenuItem;
-    private javax.swing.JMenuItem saveAsMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
     private javax.swing.JLabel userName;
     // End of variables declaration//GEN-END:variables
 
 }
-/*
-        WorkArea = new JDesktopPane() {
-            Image newimage = null;
-            {
-                ImageIcon icon = null;
-                if (Globais.backGround.isEmpty()) {
-                    URL url = getClass().getResource("/figuras/Imobilis-wallpaper.jpg");
-                    icon = new ImageIcon(url);
-                } else {
-                    String url = Globais.backGround;
-                    icon = new ImageIcon(url);
-                }
-
-                //Dimension dDesktop = this.getSize();
-                int width = 1366; //(int)dDesktop.getWidth();
-                int height = 768; //(int)dDesktop.getHeight();
-
-                Image image = icon.getImage();
-                newimage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
-            }
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                g.drawImage(newimage, 0, 0, this);
-            }
-        };
-*/

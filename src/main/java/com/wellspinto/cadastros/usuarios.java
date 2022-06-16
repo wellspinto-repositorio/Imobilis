@@ -1,9 +1,11 @@
 package com.wellspinto.cadastros;
 
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.GroupLayout;
 import javax.swing.border.*;
+import com.wellspinto.funcoes.JTextFieldLimit;
 
 /**
  *
@@ -14,8 +16,17 @@ public class usuarios extends javax.swing.JInternalFrame {
     /**
      * Creates new form usuarios
      */
+    private void btnRetornar(ActionEvent e) {
+        dispose();
+    }
+
     public usuarios() {
         initComponents();
+        
+        nome = new JTextFieldLimit(60);
+        login = new JTextFieldLimit(20);
+        //senha = new JTextFieldLimit(20);
+        
     }
 
     /**
@@ -27,30 +38,53 @@ public class usuarios extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         label1 = new JLabel();
-        textField1 = new JTextField();
+        id = new JTextField();
         label2 = new JLabel();
-        textField2 = new JTextField();
-        label3 = new JLabel();
+        nome = new JTextField();
+        foto = new JLabel();
         label4 = new JLabel();
-        textField3 = new JTextField();
+        login = new JTextField();
         label5 = new JLabel();
-        passwordField1 = new JPasswordField();
+        senha = new JPasswordField();
+        redefine = new JCheckBox();
+        panel1 = new JPanel();
         btnIncluir = new JButton();
-        button2 = new JButton();
-        checkBox1 = new JCheckBox();
+        btnAlterar = new JButton();
+        btnExcluir = new JButton();
+        btnPesquisar = new JButton();
+        btnGravar = new JButton();
+        btnRetornar = new JButton();
+        panel2 = new JPanel();
+        label6 = new JLabel();
+        label7 = new JLabel();
+        label8 = new JLabel();
+        scrollPane1 = new JScrollPane();
+        label10 = new JLabel();
+        label9 = new JLabel();
 
         //======== this ========
         setVisible(true);
+        setTitle(".:: Cadastro de Usu\u00e1rios.");
+        setIconifiable(true);
+        setFrameIcon(new ImageIcon(getClass().getResource("/cadastro/usuarios.png")));
+        setResizable(true);
         Container contentPane = getContentPane();
 
         //---- label1 ----
         label1.setText("Id:");
 
+        //---- id ----
+        id.setEditable(false);
+        id.setFocusable(false);
+        id.setFont(id.getFont().deriveFont(id.getFont().getStyle() | Font.BOLD));
+        id.setHorizontalAlignment(SwingConstants.CENTER);
+        id.setText("0");
+
         //---- label2 ----
         label2.setText("Nome:");
 
-        //---- label3 ----
-        label3.setBorder(new BevelBorder(BevelBorder.LOWERED));
+        //---- foto ----
+        foto.setBorder(new BevelBorder(BevelBorder.LOWERED));
 
         //---- label4 ----
         label4.setText("Login:");
@@ -58,15 +92,156 @@ public class usuarios extends javax.swing.JInternalFrame {
         //---- label5 ----
         label5.setText("Senha:");
 
-        //---- btnIncluir ----
-        btnIncluir.setText("Incluir");
-        btnIncluir.setIcon(new ImageIcon(getClass().getResource("/com/wellspinto/icons/intellij-showWriteAccess.png")));
+        //---- redefine ----
+        redefine.setText("Redefinir senha.");
 
-        //---- button2 ----
-        button2.setText("text");
+        //======== panel1 ========
+        {
+            panel1.setBorder(new EtchedBorder());
 
-        //---- checkBox1 ----
-        checkBox1.setText("Redefinir senha ao logar.");
+            //---- btnIncluir ----
+            btnIncluir.setText("Incluir");
+            btnIncluir.setIcon(new ImageIcon(getClass().getResource("/cadastro/user-add.png")));
+
+            //---- btnAlterar ----
+            btnAlterar.setText("Alterar");
+            btnAlterar.setIcon(new ImageIcon(getClass().getResource("/cadastro/user-edit.png")));
+
+            //---- btnExcluir ----
+            btnExcluir.setText("Ecluir");
+            btnExcluir.setIcon(new ImageIcon(getClass().getResource("/cadastro/user-delete.png")));
+
+            //---- btnPesquisar ----
+            btnPesquisar.setText("Pesquisar");
+            btnPesquisar.setIcon(new ImageIcon(getClass().getResource("/cadastro/lupa.png")));
+
+            //---- btnGravar ----
+            btnGravar.setText("Gravar");
+            btnGravar.setIcon(new ImageIcon(getClass().getResource("/cadastro/save.png")));
+
+            //---- btnRetornar ----
+            btnRetornar.setText("Retornar");
+            btnRetornar.setIcon(new ImageIcon(getClass().getResource("/cadastro/sair.png")));
+            btnRetornar.addActionListener(e -> {
+			btnRetornar(e);
+			btnRetornar(e);
+		});
+
+            GroupLayout panel1Layout = new GroupLayout(panel1);
+            panel1.setLayout(panel1Layout);
+            panel1Layout.setHorizontalGroup(
+                panel1Layout.createParallelGroup()
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnIncluir)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnAlterar)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExcluir)
+                        .addGap(29, 29, 29)
+                        .addComponent(btnPesquisar)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(btnGravar)
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRetornar)
+                        .addContainerGap())
+            );
+            panel1Layout.setVerticalGroup(
+                panel1Layout.createParallelGroup()
+                    .addGroup(panel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnRetornar)
+                            .addComponent(btnGravar)
+                            .addComponent(btnIncluir)
+                            .addComponent(btnAlterar)
+                            .addComponent(btnExcluir)
+                            .addComponent(btnPesquisar))
+                        .addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+        }
+
+        //======== panel2 ========
+        {
+            panel2.setBorder(new EtchedBorder());
+
+            //---- label6 ----
+            label6.setText("Sele\u00e7\u00e3o");
+            label6.setBackground(new Color(153, 153, 255));
+            label6.setOpaque(true);
+            label6.setForeground(Color.black);
+            label6.setFont(label6.getFont().deriveFont(label6.getFont().getStyle() | Font.BOLD));
+            label6.setBorder(UIManager.getBorder("Button.border"));
+
+            //---- label7 ----
+            label7.setText("Menu");
+            label7.setBackground(new Color(153, 153, 255));
+            label7.setOpaque(true);
+            label7.setForeground(Color.black);
+            label7.setFont(label7.getFont().deriveFont(label7.getFont().getStyle() | Font.BOLD));
+            label7.setBorder(UIManager.getBorder("Button.border"));
+
+            //---- label8 ----
+            label8.setText("Op\u00e7\u00f5es");
+            label8.setBackground(new Color(153, 153, 255));
+            label8.setOpaque(true);
+            label8.setForeground(Color.black);
+            label8.setFont(label8.getFont().deriveFont(label8.getFont().getStyle() | Font.BOLD));
+            label8.setBorder(UIManager.getBorder("Button.border"));
+
+            //======== scrollPane1 ========
+            {
+                scrollPane1.setBorder(null);
+                scrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+                scrollPane1.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            }
+
+            //---- label10 ----
+            label10.setText("Senha");
+            label10.setBackground(new Color(153, 153, 255));
+            label10.setOpaque(true);
+            label10.setForeground(Color.black);
+            label10.setFont(label10.getFont().deriveFont(label10.getFont().getStyle() | Font.BOLD));
+            label10.setBorder(UIManager.getBorder("Button.border"));
+
+            GroupLayout panel2Layout = new GroupLayout(panel2);
+            panel2.setLayout(panel2Layout);
+            panel2Layout.setHorizontalGroup(
+                panel2Layout.createParallelGroup()
+                    .addGroup(GroupLayout.Alignment.TRAILING, panel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panel2Layout.createParallelGroup(GroupLayout.Alignment.TRAILING)
+                            .addComponent(scrollPane1)
+                            .addGroup(panel2Layout.createSequentialGroup()
+                                .addComponent(label6, GroupLayout.PREFERRED_SIZE, 51, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label7, GroupLayout.PREFERRED_SIZE, 275, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(label8, GroupLayout.PREFERRED_SIZE, 315, GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(label10, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+            );
+            panel2Layout.setVerticalGroup(
+                panel2Layout.createParallelGroup()
+                    .addGroup(panel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(panel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                            .addComponent(label6)
+                            .addComponent(label7)
+                            .addComponent(label8)
+                            .addComponent(label10))
+                        .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(scrollPane1, GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
+                        .addContainerGap())
+            );
+        }
+
+        //---- label9 ----
+        label9.setText("Configura\u00e7\u00f5es de Acesso");
+        label9.setIcon(new ImageIcon(getClass().getResource("/cadastro/menu.png")));
+        label9.setOpaque(true);
+        label9.setBackground(SystemColor.windowBorder);
 
         GroupLayout contentPaneLayout = new GroupLayout(contentPane);
         contentPane.setLayout(contentPaneLayout);
@@ -75,84 +250,90 @@ public class usuarios extends javax.swing.JInternalFrame {
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup()
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(label3, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
+                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                            .addComponent(foto, GroupLayout.PREFERRED_SIZE, 130, GroupLayout.PREFERRED_SIZE)
                             .addGroup(contentPaneLayout.createParallelGroup()
                                 .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                            .addGap(19, 19, 19)
-                                            .addComponent(label1))
-                                        .addGroup(contentPaneLayout.createSequentialGroup()
-                                            .addGap(18, 18, 18)
-                                            .addComponent(label2))
-                                        .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
-                                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                            .addGroup(contentPaneLayout.createParallelGroup()
-                                                .addComponent(label4, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(label5, GroupLayout.Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE))))
+                                    .addGap(19, 19, 19)
+                                    .addComponent(label1)
+                                    .addGap(22, 22, 22)
+                                    .addComponent(id, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(label2)
                                     .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(contentPaneLayout.createParallelGroup()
-                                        .addComponent(textField2, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(textField1, GroupLayout.PREFERRED_SIZE, 56, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(nome, GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE))
                                 .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addGap(18, 18, 18)
-                                    .addComponent(checkBox1))))
-                        .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addComponent(btnIncluir)
-                            .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(button2)))
-                    .addContainerGap(14, Short.MAX_VALUE))
+                                    .addGap(12, 12, 12)
+                                    .addComponent(label4, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+                                    .addGap(12, 12, 12)
+                                    .addComponent(login, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(label5, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(senha, GroupLayout.PREFERRED_SIZE, 178, GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                                    .addComponent(redefine))
+                                .addGroup(GroupLayout.Alignment.TRAILING, contentPaneLayout.createSequentialGroup()
+                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(label9, GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE))))
+                        .addComponent(panel1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panel2, GroupLayout.DEFAULT_SIZE, 716, Short.MAX_VALUE))
+                    .addContainerGap())
         );
         contentPaneLayout.setVerticalGroup(
             contentPaneLayout.createParallelGroup()
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
                     .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
-                        .addComponent(label3, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
+                        .addComponent(foto, GroupLayout.PREFERRED_SIZE, 131, GroupLayout.PREFERRED_SIZE)
                         .addGroup(contentPaneLayout.createSequentialGroup()
-                            .addGroup(contentPaneLayout.createParallelGroup()
-                                .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                    .addComponent(label1)
-                                    .addComponent(textField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-                                .addGroup(contentPaneLayout.createSequentialGroup()
-                                    .addGap(28, 28, 28)
-                                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(textField2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label2))
-                                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                        .addComponent(textField3, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(label4))))
+                            .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                                .addComponent(label1)
+                                .addComponent(id, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label2)
+                                .addComponent(nome, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                                .addComponent(passwordField1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-                                .addComponent(label5))
+                                .addComponent(label4)
+                                .addComponent(senha, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                                .addComponent(label5)
+                                .addComponent(redefine)
+                                .addComponent(login, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
                             .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(checkBox1)))
-                    .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addGroup(contentPaneLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnIncluir)
-                        .addComponent(button2))
-                    .addContainerGap(7, Short.MAX_VALUE))
+                            .addComponent(label9, GroupLayout.PREFERRED_SIZE, 39, GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(panel2, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(panel1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private JLabel label1;
-    private JTextField textField1;
+    private JTextField id;
     private JLabel label2;
-    private JTextField textField2;
-    private JLabel label3;
+    private JTextField nome;
+    private JLabel foto;
     private JLabel label4;
-    private JTextField textField3;
+    private JTextField login;
     private JLabel label5;
-    private JPasswordField passwordField1;
+    private JPasswordField senha;
+    private JCheckBox redefine;
+    private JPanel panel1;
     private JButton btnIncluir;
-    private JButton button2;
-    private JCheckBox checkBox1;
+    private JButton btnAlterar;
+    private JButton btnExcluir;
+    private JButton btnPesquisar;
+    private JButton btnGravar;
+    private JButton btnRetornar;
+    private JPanel panel2;
+    private JLabel label6;
+    private JLabel label7;
+    private JLabel label8;
+    private JScrollPane scrollPane1;
+    private JLabel label10;
+    private JLabel label9;
     // End of variables declaration//GEN-END:variables
 }
