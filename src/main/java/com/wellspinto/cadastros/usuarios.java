@@ -67,7 +67,8 @@ public class usuarios extends javax.swing.JInternalFrame {
         setTitle(".:: Cadastro de Usu\u00e1rios.");
         setIconifiable(true);
         setFrameIcon(new ImageIcon(getClass().getResource("/cadastro/usuarios.png")));
-        setResizable(true);
+        setMinimumSize(new Dimension(740, 470));
+        setMaximumSize(new Dimension(740, 470));
         Container contentPane = getContentPane();
 
         //---- label1 ----

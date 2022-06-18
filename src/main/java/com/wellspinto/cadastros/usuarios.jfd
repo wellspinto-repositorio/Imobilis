@@ -12,7 +12,8 @@ new FormModel {
 			"title": ".:: Cadastro de Usuários."
 			"iconifiable": true
 			"frameIcon": new com.jformdesigner.model.SwingIcon( 0, "/cadastro/usuarios.png" )
-			"resizable": true
+			"minimumSize": new java.awt.Dimension( 740, 470 )
+			"maximumSize": new java.awt.Dimension( 740, 470 )
 			add( new FormComponent( "javax.swing.JLabel" ) {
 				name: "label1"
 				"text": "Id:"

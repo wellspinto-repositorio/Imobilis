@@ -41,10 +41,12 @@ private static final List<HintPanel> hintPanels = new ArrayList<>();
   
   static void showHint(Hint hint) {
 //    if (DemoPrefs.getState().getBoolean(hint.prefsKey, false)) {
-//      if (hint.nextHint != null)
-//        showHint(hint.nextHint); 
-//      return;
+      if (hint.nextHint != null) {
+          showHint(hint.nextHint); 
+          return;
+      }
 //    } 
+
     HintPanel hintPanel = new HintPanel(hint);
     hintPanel.showHint();
     hintPanels.add(hintPanel);

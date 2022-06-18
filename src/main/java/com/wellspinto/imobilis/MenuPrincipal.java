@@ -8,6 +8,8 @@ import com.formdev.flatlaf.extras.components.FlatButton;
 import com.formdev.flatlaf.extras.components.FlatTextField;
 import com.formdev.flatlaf.icons.FlatSearchWithHistoryIcon;
 import com.wellspinto.funcoes.BackGroundDeskTopPane;
+import com.wellspinto.funcoes.CentralizaTela;
+import com.wellspinto.funcoes.Db;
 import com.wellspinto.funcoes.Globais;
 import com.wellspinto.funcoes.PrinterLister;
 import java.awt.Color;
@@ -18,6 +20,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.print.PrintService;
 import javax.swing.Box;
 import javax.swing.ButtonGroup;
@@ -25,6 +29,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JInternalFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -34,6 +39,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
+import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 
 /**
@@ -52,6 +58,8 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private ButtonGroup bg = new ButtonGroup();
     private FlatTextField searchBar = new FlatTextField();
 
+    private Db conn = Globais.conn;
+    
     /**
      * Creates new form MenuPrincipal
      */
@@ -129,8 +137,82 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void SetarMenu() {    
         String menu = Globais.userMenu;
         String[] amenu = menu.split(";");
-        
-        System.out.println("");
+
+        String nivelMenu = "select LPAD(id,3,0) id, nivel, nome, atalho from menu where snivel = 0 order by nivel;";
+        ResultSet nivel = conn.OpenTable(nivelMenu, null);
+        try {
+            while (nivel.next()) {
+                String tid = nivel.getString("id");
+                String tnome = nivel.getString("nome");
+                String tatalho = nivel.getString("atalho");
+                
+                // Cria menu nivel superior
+                JMenu menuItem = new JMenu(tnome);  
+                menuItem.setVisible(menuVisible(amenu,tid));
+                
+                String snivelMenu = "select LPAD(id,3,0) id, nivel, snivel, icone, nome, atalho, chamada from menu where nivel = :nivel and snivel > 0 order by snivel;";
+                Object[][] param = {
+                    {"int", "nivel", nivel.getInt("nivel")},
+                };                
+                ResultSet snivel = conn.OpenTable(snivelMenu, param);
+                try {
+                    while (snivel.next()) {
+                        String id = snivel.getString("id");
+                        String nome = snivel.getString("nome");
+                        String atalho = snivel.getString("atalho");
+                        final String rotina = snivel.getString("chamada");
+                        String icone = snivel.getString("icone");                        
+                        
+                        JMenuItem item = new javax.swing.JMenuItem();
+                        item.setAccelerator(KeyStroke.getKeyStroke("control alt " + atalho));
+                        // Setar Icones
+                        if (icone != null) {
+                            FlatSVGIcon ico = new FlatSVGIcon(icone,16,16);
+                            try{
+                                item.setIcon((Icon)ico); 
+                            } catch (Exception e) {}
+                        }
+                        item.setText(nome);
+                        item.addActionListener(new java.awt.event.ActionListener() {
+                            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                                try {  
+                                    Class classe = Class.forName(rotina);  
+                                    JInternalFrame frame = (JInternalFrame) classe.newInstance();  
+                                    WorkArea.add(frame);
+                                    WorkArea.getDesktopManager().activateFrame(frame);
+                                    
+                                    frame.requestFocus();
+                                    frame.setSelected(true);
+                                    frame.setVisible(true);  
+                                    frame.pack();
+                                    CentralizaTela.setCentro(frame, WorkArea, 0, 0);
+                                } catch (Exception ex) { System.out.println(rotina + " : Erro no cadastro."); }  
+                            }
+                        });
+
+                        item.setVisible(menuVisible(amenu,id));
+                        menuItem.add(item);                        
+                    }
+                } catch (SQLException ex) {}
+                
+                // Adiciona na barra de menu
+                menuBar.add(menuItem);
+                
+                conn.CloseTable(snivel);
+            }
+        } catch (SQLException e) {}
+        conn.CloseTable(nivel);
+    }
+    
+    private boolean menuVisible(String[] amenu, String idmenu) {
+        boolean _visible = false;
+        for (String item : amenu) {
+            if (item.subSequence(0, 3).equals(idmenu)) {
+                _visible = true;
+                break;
+            }
+        }    
+        return _visible;
     }
     
     private void InitSettings() {
